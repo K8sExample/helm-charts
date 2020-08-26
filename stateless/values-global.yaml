@@ -1,0 +1,43 @@
+#name: OPTIONAL - ovvride the directory name
+
+#image:
+#  repository: # OPTIONAL - default is docker.io
+#  folder: # OPTIONAL - default is the directory name or name if stated
+  #name: # OPTIONAL - default is the directory name
+#docker image full path:  "image.repository / (image.name || image.folder || name || directory name) / (image.name || name || directory name) / image.tag"
+
+
+#securityContext:
+#  runAsUser: 1000 # OPTIONAL - for any Containers in the Pod, all processes run with this user ID
+#  runAsGroup: 3000 # OPTIONAL - for any Containers in the Pod, all processes run with this group ID
+#  fsGroup: 2000 # OPTIONAL - for any Containers in the Pod, all processes run with this supplementary group ID
+
+#command
+#env:
+# NAME: value
+#args: []
+#port: 8080 # OPTIONAL
+#healthchecksCommand
+#healthchecksPath: /healthcheck
+
+# livenessProbe:
+#   initialDelaySeconds: 20
+#   periodSeconds: 10
+#   timeoutSeconds: 2
+#   failureThreshold: 5
+
+# readinessProbe:
+#   initialDelaySeconds: 1
+#   periodSeconds: 5
+#   timeoutSeconds: 2
+#   successThreshold: 1
+#   failureThreshold: 1
+
+# limits:
+#   cpu: 500m
+#   memory: 1Gi
+# requests:
+#   cpu: 500m
+#   memory: 1Gi
+
+#preStopSleep: 5

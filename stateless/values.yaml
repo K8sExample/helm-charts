@@ -1,0 +1,7 @@
+livenessProbe: {}
+readinessProbe: {}
+serviceAccount: {}
+autoscaling: {}
+podSecurityContext: {}
+limits: {}
+requests: {}

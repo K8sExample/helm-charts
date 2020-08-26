@@ -1,0 +1,4 @@
+image:
+  tag: "1.0" #MANDATORY - the tag of the image docker
+
+#iamRole: #OPTIONAL - if the pod requires aws resources

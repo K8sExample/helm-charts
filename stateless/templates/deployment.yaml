@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "stateless.fullname" . }}
+  labels:
+    {{- include "stateless.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount  | default 2}}
+{{- end }}
+{{- if .Values.deploymentStrategy }}
+  strategy:
+    {{- toYaml .Values.deploymentStrategy | nindent 2 }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "stateless.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- if .Values.iamRole }}
+      annotations:
+        iam.amazonaws.com/role: "{{ .Values.iamRole }}"
+      {{- end }}
+      labels:
+        {{- include "stateless.selectorLabels" . | nindent 8 }}
+    spec:
+
+      serviceAccountName: {{ include "stateless.serviceAccountName" . }}
+      securityContext:
+        runAsUser: {{ .Values.podSecurityContext.user | default 1000 }}
+        runAsGroup: {{ .Values.podSecurityContext.group | default 3000 }}
+        fsGroup: {{ .Values.podSecurityContext.fsGroup | default 2000 }}
+
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 90
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - {{ include "stateless.name" . }}
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 70
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                  - {{ include "stateless.name" . }}
+              topologyKey: kubernetes.io/hostname
+
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds | default 110 }}
+
+      containers:
+        {{- include "container" . | nindent 8  -}}
+        {{ range $key, $value :=  .Values.sideCars }}
+        {{ include "test" (merge $value $ $.Values ) | nindent 8 -}}
+        {{ end }}
