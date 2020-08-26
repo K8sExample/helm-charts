@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  stateless:
+  - apiVersion: v2
+    created: "2020-08-26T18:52:14.835832+03:00"
+    description: An abstarct chart for stateless applciations
+    digest: ff11bb97a43c4b9ac1e6b1fe8283114c5a1d876d2f37c0fa1abcffc005ca0f2a
+    name: stateless
+    type: application
+    urls:
+    - https://K8sExample.github.com/helm-charts/stateless-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-08-26T18:52:14.831288+03:00"
